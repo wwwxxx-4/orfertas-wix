@@ -9,6 +9,7 @@
 
   <div class="container mt-5">
     <h1 class="text-center mb-4">✈️ Ofertas Atualizadas</h1>
+
     <table class="table table-bordered text-center">
       <thead class="table-primary">
         <tr>
@@ -19,13 +20,13 @@
         </tr>
       </thead>
       <tbody id="ofertasBody">
-        <!-- Conteúdo será carregado via JavaScript -->
+        <!-- Os dados serão preenchidos aqui via JS -->
       </tbody>
     </table>
   </div>
 
   <script>
-    const API_URL = "https://api.baserow.io/api/database/rows/table/1058267/?user_field_names=true";
+    const API_URL = "https://baserow.io/public/grid/gdgdsGXmVCT2qGy1wiwpfPu5_SiZ_9RC6Qrtqdu9VQc/?format=json";
 
     async function carregarOfertas() {
       try {
@@ -34,21 +35,21 @@
 
         const corpo = document.getElementById("ofertasBody");
 
-        data.results.forEach(row => {
+        data.forEach(row => {
           const tr = document.createElement("tr");
 
           tr.innerHTML = `
-            <td>${row.origem || ''}</td>
-            <td>${row.destino || ''}</td>
-            <td>${row.preco || ''}</td>
-            <td>${row["Created on"] || ''}</td>
+            <td>${row.origem || ""}</td>
+            <td>${row.destino || ""}</td>
+            <td>${row.preco || ""}</td>
+            <td>${row["Created on"] || ""}</td>
           `;
 
           corpo.appendChild(tr);
         });
 
-      } catch (erro) {
-        console.error("Erro ao carregar dados:", erro);
+      } catch (error) {
+        console.error("Erro ao carregar dados:", error);
       }
     }
 
