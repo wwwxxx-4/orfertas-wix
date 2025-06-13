@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Ofertas Atualizadas</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
+
   <div class="container mt-5">
-    <h1 class="text-center mb-4"✈️ Ofertas Atualizadas</h1>
+    <h1 class="text-center mb-4">✈️ Ofertas Atualizadas</h1>
     <table class="table table-bordered text-center">
       <thead class="table-primary">
         <tr>
@@ -18,25 +19,17 @@
         </tr>
       </thead>
       <tbody id="ofertasBody">
-        <!-- Conteúdo será preenchido via JS -->
+        <!-- Conteúdo será carregado via JavaScript -->
       </tbody>
     </table>
   </div>
 
   <script>
-    // Substitua pela URL da sua tabela Baserow
-    const API_URL = "https://baserow.io/public/grid/gdgdsGXmVCT2qGy1wiwpfPu5_SiZ_9RC6Qrtqdu9VQc";
-
-    // Substitua pela sua API Key
-    const API_KEY = "Ehq8wJC2rB74tmmR4lwwyIc8iKw4YHw8"; 
+    const API_URL = "https://api.baserow.io/api/database/rows/table/1058267/?user_field_names=true";
 
     async function carregarOfertas() {
       try {
-        const response = await fetch(API_URL, {
-          headers: {
-            Authorization: ``
-          }
-        });
+        const response = await fetch(API_URL);
         const data = await response.json();
 
         const corpo = document.getElementById("ofertasBody");
@@ -45,16 +38,17 @@
           const tr = document.createElement("tr");
 
           tr.innerHTML = `
-            <td>${row.origem}</td>
-            <td>${row.destino}</td>
-            <td>${row.preco}</td>
-            <td>${row.Created_on || ''}</td>
+            <td>${row.origem || ''}</td>
+            <td>${row.destino || ''}</td>
+            <td>${row.preco || ''}</td>
+            <td>${row["Created on"] || ''}</td>
           `;
 
           corpo.appendChild(tr);
         });
-      } catch (error) {
-        console.error("Erro ao carregar dados:", error);
+
+      } catch (erro) {
+        console.error("Erro ao carregar dados:", erro);
       }
     }
 
