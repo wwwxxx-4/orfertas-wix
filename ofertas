@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ofertas Atualizadas</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">✈️ Ofertas Atualizadas</h1>
+    <table class="table table-bordered text-center">
+      <thead class="table-primary">
+        <tr>
+          <th>Origem</th>
+          <th>Destino</th>
+          <th>Preço</th>
+          <th>Data</th>
+        </tr>
+      </thead>
+      <tbody id="ofertasBody">
+        <!-- Preenchido via JS -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const API_URL = "https://api.baserow.io/api/database/rows/table/570955/?user_field_names=true";
+    const API_KEY = "Ehq8wJC2rB74tmmR4lwwyIc8iKw4YHw8";
+
+    async function carregarOfertas() {
+      try {
+        const response = await fetch(API_URL, {
+          headers: {
+            Authorization: `Token ${API_KEY}`
+          }
+        });
+
+        const data = await response.json();
+        const corpo = document.getElementById("ofertasBody");
+
+        data.results.forEach(row => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${row.origem || ""}</td>
+            <td>${row.destino || ""}</td>
+            <td>${row.preco || ""}</td>
+            <td>${(row["Created on"] || "").split("T")[0]}</td>
+          `;
+          corpo.appendChild(tr);
+        });
+
+      } catch (error) {
+        console.error("Erro ao carregar dados:", error);
+      }
+    }
+
+    carregarOfertas();
+  </script>
+</body>
+</html>
